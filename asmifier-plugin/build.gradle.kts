@@ -3,17 +3,16 @@ import net.ltgt.gradle.errorprone.errorprone
 
 plugins {
     id("java-gradle-plugin")
-    id("net.ltgt.errorprone") version "4.1.0"
-    id("com.diffplug.spotless") version "6.25.0"
+    alias(libs.plugins.errorprone)
+    alias(libs.plugins.spotless)
 }
 
 dependencies {
-    implementation("org.ow2.asm:asm-util:9.7.1")
-    errorprone("com.google.errorprone:error_prone_core:2.35.1")
-    errorprone("com.uber.nullaway:nullaway:0.12.0")
-    testImplementation(platform("org.junit:junit-bom:5.11.3"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("org.assertj:assertj-core:3.26.3")
+    implementation(libs.asm.util)
+    errorprone(libs.errorprone)
+    errorprone(libs.nullaway)
+    testImplementation(libs.junit5)
+    testImplementation(libs.assertj)
 }
 
 gradlePlugin {

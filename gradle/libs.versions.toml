@@ -1,0 +1,12 @@
+[libraries]
+asm-util = "org.ow2.asm:asm-util:9.7.1"
+errorprone = "com.google.errorprone:error_prone_core:2.35.1"
+nullaway = "com.uber.nullaway:nullaway:0.12.0"
+
+#Testing
+junit5 = "org.junit.jupiter:junit-jupiter:5.11.3"
+assertj = "org.assertj:assertj-core:3.26.3"
+
+[plugins]
+errorprone = { id = "net.ltgt.errorprone", version = "4.1.0" }
+spotless = { id = "com.diffplug.spotless", version = "6.25.0" }
