@@ -2,7 +2,6 @@ import net.ltgt.gradle.errorprone.CheckSeverity
 import net.ltgt.gradle.errorprone.errorprone
 
 plugins {
-    id("com.likethesalad.tools.java-library")
     id("java-gradle-plugin")
     alias(libs.plugins.errorprone)
     alias(libs.plugins.spotless)
@@ -14,6 +13,12 @@ dependencies {
     errorprone(libs.nullaway)
     testImplementation(libs.junit5)
     testImplementation(libs.assertj)
+}
+
+val javaVersion = JavaVersion.VERSION_11
+java {
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
 }
 
 gradlePlugin {
@@ -31,6 +36,9 @@ tasks.withType(Test::class.java) {
 tasks.withType(JavaCompile::class.java) {
     if (name.contains("test", true)) {
         options.errorprone.isEnabled.set(false)
+        val testJavaVersion = JavaVersion.VERSION_15.toString()
+        sourceCompatibility = testJavaVersion
+        targetCompatibility = testJavaVersion
     } else {
         options.errorprone {
             check("NullAway", CheckSeverity.ERROR)
