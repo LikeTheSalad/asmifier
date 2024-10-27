@@ -1,4 +1,4 @@
-rootProject.name = "asmfier"
+rootProject.name = "asmifier"
 
 dependencyResolutionManagement {
     repositoriesMode = RepositoriesMode.FAIL_ON_PROJECT_REPOS
@@ -7,4 +7,4 @@ dependencyResolutionManagement {
     }
 }
 
-include(":asmfier-plugin")
+include(":asmifier-plugin")

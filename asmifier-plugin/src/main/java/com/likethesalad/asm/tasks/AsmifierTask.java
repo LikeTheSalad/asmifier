@@ -21,7 +21,7 @@ import org.gradle.work.ChangeType;
 import org.gradle.work.FileChange;
 import org.gradle.work.InputChanges;
 
-public abstract class AsmfierTask extends DefaultTask {
+public abstract class AsmifierTask extends DefaultTask {
 
   @PathSensitive(PathSensitivity.RELATIVE)
   @SkipWhenEmpty

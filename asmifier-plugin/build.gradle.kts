@@ -15,9 +15,9 @@ tasks.withType(Test::class.java) {
 
 gradlePlugin {
     plugins {
-        create("asmfierPlugin") {
-            id = "com.likethesalad.asmfier"
-            implementationClass = "com.likethesalad.asm.AsmfierPlugin"
+        create("asmifierPlugin") {
+            id = "com.likethesalad.asmifier"
+            implementationClass = "com.likethesalad.asm.AsmifierPlugin"
         }
     }
 }
