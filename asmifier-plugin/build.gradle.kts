@@ -2,6 +2,7 @@ import net.ltgt.gradle.errorprone.CheckSeverity
 import net.ltgt.gradle.errorprone.errorprone
 
 plugins {
+    id("com.likethesalad.tools.java-library")
     id("java-gradle-plugin")
     alias(libs.plugins.errorprone)
     alias(libs.plugins.spotless)
