@@ -16,6 +16,15 @@ dependencies {
     testImplementation("org.assertj:assertj-core:3.26.3")
 }
 
+gradlePlugin {
+    plugins {
+        create("asmifierPlugin") {
+            id = "com.likethesalad.asmifier"
+            implementationClass = "com.likethesalad.asm.AsmifierPlugin"
+        }
+    }
+}
+
 tasks.withType(Test::class.java) {
     useJUnitPlatform()
 }
@@ -36,13 +45,4 @@ spotless {
 }
 tasks.named("classes").configure {
     dependsOn("spotlessApply")
-}
-
-gradlePlugin {
-    plugins {
-        create("asmifierPlugin") {
-            id = "com.likethesalad.asmifier"
-            implementationClass = "com.likethesalad.asm.AsmifierPlugin"
-        }
-    }
 }
