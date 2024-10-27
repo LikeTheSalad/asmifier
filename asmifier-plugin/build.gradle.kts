@@ -51,6 +51,3 @@ spotless {
         googleJavaFormat()
     }
 }
-tasks.named("classes").configure {
-    dependsOn("spotlessApply")
-}
