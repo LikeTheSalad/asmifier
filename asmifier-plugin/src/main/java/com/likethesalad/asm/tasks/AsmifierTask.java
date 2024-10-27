@@ -56,7 +56,7 @@ public abstract class AsmifierTask extends DefaultTask {
             || fileChange.getChangeType().equals(ChangeType.MODIFIED)) {
           String relativeSourcePath = fileChange.getNormalizedPath();
           File outputFile = getOutputFile(relativeSourcePath, fileChange.getFile().getName());
-          asmfyToFile(outputFile, project, classpath, relativeSourcePath);
+          asmifyToFile(outputFile, project, classpath, relativeSourcePath);
         }
       }
     } else {
@@ -67,16 +67,16 @@ public abstract class AsmifierTask extends DefaultTask {
                 if (!fileVisitDetails.isDirectory()) {
                   String relativeSourcePath = fileVisitDetails.getRelativePath().getPathString();
                   File outputFile = getOutputFile(relativeSourcePath, fileVisitDetails.getName());
-                  asmfyToFile(outputFile, project, classpath, relativeSourcePath);
+                  asmifyToFile(outputFile, project, classpath, relativeSourcePath);
                 }
               });
     }
   }
 
-  private void asmfyToFile(
+  private void asmifyToFile(
       File outputFile, Project project, FileCollection classpath, String relativeSourcePath) {
     try (FileOutputStream outputStream = new FileOutputStream(outputFile)) {
-      asmfy(project, classpath, relativeSourcePath, outputStream);
+      asmify(project, classpath, relativeSourcePath, outputStream);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -102,7 +102,7 @@ public abstract class AsmifierTask extends DefaultTask {
         .getAsFile();
   }
 
-  private void asmfy(
+  private void asmify(
       Project project, FileCollection classpath, String relativePath, OutputStream outputStream) {
     String className = relativePath.replaceFirst("\\.class", "").replaceAll("/", ".");
     project.javaexec(
