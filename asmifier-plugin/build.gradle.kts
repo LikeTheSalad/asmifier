@@ -4,6 +4,7 @@ import net.ltgt.gradle.errorprone.errorprone
 plugins {
     id("java-gradle-plugin")
     id("net.ltgt.errorprone") version "4.1.0"
+    id("com.diffplug.spotless") version "6.25.0"
 }
 
 dependencies {
@@ -27,6 +28,14 @@ tasks.withType(JavaCompile::class.java) {
             option("NullAway:AnnotatedPackages", "com.likethesalad.asm")
         }
     }
+}
+spotless {
+    java {
+        googleJavaFormat()
+    }
+}
+tasks.named("classes").configure {
+    dependsOn("spotlessApply")
 }
 
 gradlePlugin {
