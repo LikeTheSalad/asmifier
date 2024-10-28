@@ -26,7 +26,7 @@ jobs:
         run: ./gradlew changelogUpdate
       - name: Creating release branch PR
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           version=$(cat gradle.properties | grep -Po "(?<=version=)\d+\.\d+\.\d+")
           echo "The version is $version"
