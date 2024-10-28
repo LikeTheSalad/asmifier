@@ -22,28 +22,38 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Creating release branch
+      - name: Setting variables
+        id: variables
         run: |
           version=$(cat gradle.properties | grep -Po "(?<=version=)\d+\.\d+\.\d+")
-          release_branch="release/$version"
+          echo "The version is $version"
+          { 
+            echo "version=$version"
+            echo "release_branch=release/$version"
+          } >> "$GITHUB_OUTPUT"
+      - name: Creating release branch
+        env:
+          RELEASE_BRANCH: ${{ steps.variables.outputs.release_branch }}
+        run: |
           git config user.email "likethesalad@gmail.com"
           git config user.name "Cesar Munoz"
           
-          git checkout -b $release_branch
-          git push --set-upstream origin $release_branch
+          git checkout -b $RELEASE_BRANCH
+          git push --set-upstream origin $RELEASE_BRANCH
       - name: Updating the CHANGELOG.md file
         run: ./gradlew changelogUpdate
       - name: Creating release branch PR
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.variables.outputs.version }}
+          RELEASE_BRANCH: ${{ steps.variables.outputs.release_branch }}
         run: |
-          echo "The version is $version"
-          message="Prepare release $version"
-          branch="pre-release/$version"
+          message="Prepare release $VERSION"
+          branch="pre-release/$VERSION"
           
           git checkout -b $branch
           git commit -a -m "$message"
           git push --set-upstream origin $branch
-          gh pr create --title "[$release_branch] $message" \
+          gh pr create --title "[$RELEASE_BRANCH] $message" \
                        --body "$message." \
-                       --base $release_branch
+                       --base $RELEASE_BRANCH
