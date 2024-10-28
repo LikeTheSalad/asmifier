@@ -22,6 +22,14 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+      - name: Creating release branch
+        run: |
+          release_branch="release/$version"
+          git config user.email "likethesalad@gmail.com"
+          git config user.name "Cesar Munoz"
+          
+          git checkout -b $release_branch
+          git push --set-upstream origin $release_branch
       - name: Updating the CHANGELOG.md file
         run: ./gradlew changelogUpdate
       - name: Creating release branch PR
@@ -31,11 +39,8 @@ jobs:
           version=$(cat gradle.properties | grep -Po "(?<=version=)\d+\.\d+\.\d+")
           echo "The version is $version"
           message="Prepare release $version"
-          branch="prerelease/$version"
-          release_branch="release/$version"
+          branch="pre-release/$version"
           
-          git config user.email "likethesalad@gmail.com"
-          git config user.name "Cesar Munoz"
           git checkout -b $branch
           git commit -a -m "$message"
           git push --set-upstream origin $branch
