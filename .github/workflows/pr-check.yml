@@ -17,3 +17,11 @@ jobs:
           distribution: 'temurin'
       - name: Build and check with Gradle Wrapper
         run: ./gradlew check
+      - name: Store build report
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: reports
+          path: |
+            **/build/reports/
+            **/build/test-results/
