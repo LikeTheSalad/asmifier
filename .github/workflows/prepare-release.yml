@@ -3,7 +3,8 @@ name: Prepare release
 on: workflow_dispatch
 
 jobs:
-  build:
+  prepare_release:
+    name: Prepare release
     runs-on: ubuntu-latest
     permissions:
       contents: write
