@@ -16,4 +16,4 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - name: Build and check with Gradle Wrapper
-        run: .\gradlew check
+        run: ./gradlew check --scan
