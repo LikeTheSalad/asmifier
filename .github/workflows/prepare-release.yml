@@ -34,6 +34,8 @@ jobs:
           branch="prerelease/$version"
           release_branch="release/$version"
           
+          git config user.email "likethesalad@gmail.com"
+          git config user.name "Cesar Munoz"
           git checkout -b $branch
           git commit -a -m "$message"
           git push --set-upstream origin $branch
