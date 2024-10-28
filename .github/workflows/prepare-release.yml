@@ -1,0 +1,39 @@
+name: Prepare release
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify prerequisites
+        run: |
+          if [[ $GITHUB_REF_NAME != main ]]; then
+            echo This workflow should only be run against main
+            exit 1
+          fi
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Updating the CHANGELOG.md file
+        run: ./gradlew changelogUpdate
+      - name: Creating release branch PR
+        run: |
+          version=$(cat gradle.properties | grep -Po "(?<=version=)\d+\.\d+\.\d+")
+          echo "The version is $version"
+          message="Prepare release $version"
+          branch="prerelease/$version"
+          release_branch="release/$version"
+          
+          git checkout -b $branch
+          git commit -a -m "$message"
+          git push --set-upstream origin $branch
+          gh pr create --title "[$release_branch] $message" \
+                       --body "$message." \
+                       --base $release_branch
