@@ -38,9 +38,9 @@ jobs:
         run: |
           git config user.email "likethesalad@gmail.com"
           git config user.name "Cesar Munoz"
-          
-          git checkout -b $RELEASE_BRANCH
-          git push --set-upstream origin $RELEASE_BRANCH
+
+      #          git checkout -b $RELEASE_BRANCH
+      #          git push --set-upstream origin $RELEASE_BRANCH
       - name: Updating the CHANGELOG.md file
         run: ./gradlew changelogUpdate
       - name: Creating release branch PR
