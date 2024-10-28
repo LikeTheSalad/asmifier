@@ -1,7 +1,6 @@
 package com.likethesalad.asm;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,9 +21,11 @@ import org.junit.jupiter.api.io.TempDir;
 
 class AsmifierPluginTest {
   @TempDir File projectDir;
+  Path projectPath;
 
   @BeforeEach
   void setUp() throws IOException {
+    projectPath = projectDir.toPath();
     createBuildFile();
     createFile(
         "settings.gradle.kts",
@@ -76,7 +77,7 @@ class AsmifierPluginTest {
 
   @Test
   void verifyIncrementalCompilation() throws IOException {
-    File myClassFile =
+    Path myClassFile =
         createAsmifierSourceFile(
             "com/test/MyClass.java",
             """
@@ -130,9 +131,8 @@ class AsmifierPluginTest {
     long thirdClassModifiedTime = thirdClassAttrs.lastModifiedTime().toMillis();
 
     // Removing input
-    if (!myClassFile.delete()) {
-      fail("Could not delete the input file");
-    }
+    Files.delete(myClassFile);
+
     // Modifying input
     createAsmifierSourceFile(
         "com/test/MyThirdClass.java",
@@ -199,17 +199,16 @@ class AsmifierPluginTest {
 
   private Map<String, File> getDirFiles(String projectDirPath) throws IOException {
     Map<String, File> files = new HashMap<>();
-    File dir = getProjectFile(projectDirPath);
-    if (!dir.exists()) {
+    Path dir = getProjectPath(projectDirPath);
+    if (!Files.exists(dir)) {
       return files;
     }
-    Path dirPath = dir.toPath();
     Files.walkFileTree(
-        dirPath,
+        dir,
         new SimpleFileVisitor<>() {
           @Override
           public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
-            files.put(dirPath.relativize(file).toString(), file.toFile());
+            files.put(dir.relativize(file).toString().replace('\\', '/'), file.toFile());
             return FileVisitResult.CONTINUE;
           }
         });
@@ -239,22 +238,24 @@ class AsmifierPluginTest {
                 """);
   }
 
-  private File createAsmifierSourceFile(String javaRelativePath, String contents)
+  private Path createAsmifierSourceFile(String javaRelativePath, String contents)
       throws IOException {
     return createFile("src/asmifier/java/" + javaRelativePath, contents);
   }
 
-  private File createFile(String projectRelativePath, String contents) throws IOException {
-    File file = getProjectFile(projectRelativePath);
-    if (file.getParentFile() != projectDir && !file.getParentFile().exists()) {
-      file.getParentFile().mkdirs();
+  private Path createFile(String projectRelativePath, String contents) throws IOException {
+    Path path = getProjectPath(projectRelativePath);
+    if (path.getParent() != projectPath && !Files.exists(path.getParent())) {
+      if (!path.getParent().toFile().mkdirs()) {
+        throw new IllegalStateException("Could not create dir: " + path.getParent());
+      }
     }
-    Files.writeString(file.toPath(), contents);
-    return file;
+    Files.writeString(path, contents);
+    return path;
   }
 
-  private File getProjectFile(String projectRelativePath) {
-    return new File(projectDir, projectRelativePath);
+  private Path getProjectPath(String projectRelativePath) {
+    return projectPath.resolve(projectRelativePath);
   }
 
   private static TaskOutcome getAsmifierOutcome(BuildResult result) {
