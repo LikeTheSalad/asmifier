@@ -1,7 +1,7 @@
 [libraries]
 asm-util = "org.ow2.asm:asm-util:9.7.1"
 errorprone = "com.google.errorprone:error_prone_core:2.35.1"
-nullaway = "com.uber.nullaway:nullaway:0.12.0"
+nullaway = "com.uber.nullaway:nullaway:0.12.1"
 
 #Testing
 junit5 = "org.junit.jupiter:junit-jupiter:5.11.3"
