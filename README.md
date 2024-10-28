@@ -8,7 +8,7 @@ the [ASMifier](https://asm.ow2.io/javadoc/org/objectweb/asm/util/ASMifier.html) 
 that can convert multiple `.java` files at once.
 
 This tool, as well as [the one it's built upon](https://asm.ow2.io/javadoc/org/objectweb/asm/util/ASMifier.html), is
-meant to be used as a development tool for anyone who'd like to check how does Java code translates into bytecode
+meant to be used as a development tool for anyone who'd like to check how does Java code translate into bytecode
 instructions using [ASM](https://asm.ow2.io/).
 
 What it is not
