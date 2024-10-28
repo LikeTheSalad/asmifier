@@ -24,6 +24,7 @@ jobs:
           distribution: 'temurin'
       - name: Creating release branch
         run: |
+          version=$(cat gradle.properties | grep -Po "(?<=version=)\d+\.\d+\.\d+")
           release_branch="release/$version"
           git config user.email "likethesalad@gmail.com"
           git config user.name "Cesar Munoz"
@@ -36,7 +37,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          version=$(cat gradle.properties | grep -Po "(?<=version=)\d+\.\d+\.\d+")
           echo "The version is $version"
           message="Prepare release $version"
           branch="pre-release/$version"
