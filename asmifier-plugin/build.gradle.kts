@@ -32,6 +32,7 @@ gradlePlugin {
 
 tasks.withType(Test::class.java) {
     useJUnitPlatform()
+    systemProperty("asm_version", libs.versions.asm.get())
 }
 tasks.withType(JavaCompile::class.java) {
     if (name.contains("test", true)) {
