@@ -52,7 +52,7 @@ jobs:
           version=$(cat gradle.properties | grep -Po "(?<=version=)\d+\.\d+\.\d+")
           tag="v$version"
           git tag $tag
-          git push $tag
+          git push origin tag $tag
           
           gh release create --target $GITHUB_REF_NAME \
                                       --title "$version" \
