@@ -65,6 +65,8 @@ jobs:
           git commit -a -m "Bumping version"
           git push
       - name: Create PR to main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           message="Prepare for the next release"
           gh pr create --title "$message" \
