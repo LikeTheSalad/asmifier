@@ -46,6 +46,8 @@ jobs:
           distribution: 'temurin'
       - name: Creating a GH release
         id: variables
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.email "likethesalad@gmail.com"
           git config user.name "Cesar Munoz"
