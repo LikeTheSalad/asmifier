@@ -3,7 +3,7 @@ asm = "9.7.1"
 
 [libraries]
 asm-util = { module = "org.ow2.asm:asm-util", version.ref = "asm" }
-errorprone = "com.google.errorprone:error_prone_core:2.35.1"
+errorprone = "com.google.errorprone:error_prone_core:2.36.0"
 nullaway = "com.uber.nullaway:nullaway:0.12.1"
 
 #Testing
