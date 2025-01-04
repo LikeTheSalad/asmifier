@@ -8,7 +8,7 @@ nullaway = "com.uber.nullaway:nullaway:0.12.1"
 
 #Testing
 junit5 = "org.junit.jupiter:junit-jupiter:5.11.4"
-assertj = "org.assertj:assertj-core:3.27.1"
+assertj = "org.assertj:assertj-core:3.27.2"
 
 [plugins]
 errorprone = { id = "net.ltgt.errorprone", version = "4.1.0" }
