@@ -7,7 +7,7 @@ errorprone = "com.google.errorprone:error_prone_core:2.36.0"
 nullaway = "com.uber.nullaway:nullaway:0.12.3"
 
 #Testing
-junit5 = "org.junit.jupiter:junit-jupiter:5.11.4"
+junit5 = "org.junit.jupiter:junit-jupiter:5.12.0"
 assertj = "org.assertj:assertj-core:3.27.3"
 
 [plugins]
