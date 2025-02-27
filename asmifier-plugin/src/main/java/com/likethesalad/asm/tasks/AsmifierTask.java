@@ -10,7 +10,6 @@ import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileType;
-import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.PathSensitive;
@@ -25,8 +24,8 @@ public abstract class AsmifierTask extends DefaultTask {
 
   @PathSensitive(PathSensitivity.RELATIVE)
   @SkipWhenEmpty
-  @InputDirectory
-  public abstract DirectoryProperty getTargetClasses();
+  @InputFiles
+  public abstract ConfigurableFileCollection getTargetClasses();
 
   @InputFiles
   public abstract ConfigurableFileCollection getClasspath();
@@ -37,7 +36,7 @@ public abstract class AsmifierTask extends DefaultTask {
   @TaskAction
   public void execute(InputChanges inputChanges) {
     Project project = getProject();
-    FileCollection classpath = project.files(getClasspath(), getTargetClasses().getAsFile());
+    FileCollection classpath = project.files(getClasspath(), getTargetClasses());
 
     if (inputChanges.isIncremental()) {
       Iterable<FileChange> fileChanges = inputChanges.getFileChanges(getTargetClasses());

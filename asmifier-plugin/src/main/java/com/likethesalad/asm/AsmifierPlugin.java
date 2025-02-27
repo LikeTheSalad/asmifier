@@ -40,7 +40,7 @@ public final class AsmifierPlugin implements Plugin<Project> {
                       .dir("generated/sources/" + ASMIFIER_OUTPUT_DIR_NAME));
           asmifierTask
               .getTargetClasses()
-              .set(compileJava.flatMap(JavaCompile::getDestinationDirectory));
+              .from(compileJava.flatMap(JavaCompile::getDestinationDirectory));
           asmifierTask.getClasspath().from(asmifierClasspath);
         });
 
