@@ -11,7 +11,8 @@ dependencies {
     implementation(libs.asm.util)
     errorprone(libs.errorprone)
     errorprone(libs.nullaway)
-    testImplementation(libs.junit5)
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.bundles.junit)
     testImplementation(libs.assertj)
 }
 

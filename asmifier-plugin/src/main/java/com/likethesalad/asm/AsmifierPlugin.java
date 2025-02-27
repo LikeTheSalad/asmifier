@@ -10,7 +10,6 @@ import org.gradle.api.plugins.JavaPluginExtension;
 import org.gradle.api.provider.Provider;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskProvider;
-import org.gradle.api.tasks.compile.JavaCompile;
 import org.jetbrains.annotations.NotNull;
 
 public final class AsmifierPlugin implements Plugin<Project> {
@@ -22,8 +21,6 @@ public final class AsmifierPlugin implements Plugin<Project> {
     JavaPluginExtension javaExtension =
         project.getExtensions().getByType(JavaPluginExtension.class);
     SourceSet asmifierSourceSet = javaExtension.getSourceSets().create(ASMIFIER_TASK_NAME);
-    TaskProvider<JavaCompile> compileJava =
-        project.getTasks().named(asmifierSourceSet.getCompileJavaTaskName(), JavaCompile.class);
 
     Configuration asmifierClasspath = getAsmifierClasspath(project, asmifierSourceSet);
 
@@ -38,9 +35,7 @@ public final class AsmifierPlugin implements Plugin<Project> {
                       .getLayout()
                       .getBuildDirectory()
                       .dir("generated/sources/" + ASMIFIER_OUTPUT_DIR_NAME));
-          asmifierTask
-              .getTargetClasses()
-              .set(compileJava.flatMap(JavaCompile::getDestinationDirectory));
+          asmifierTask.getTargetClasses().from(asmifierSourceSet.getOutput());
           asmifierTask.getClasspath().from(asmifierClasspath);
         });
 
