@@ -4,7 +4,7 @@ asm = "9.7.1"
 [libraries]
 asm-util = { module = "org.ow2.asm:asm-util", version.ref = "asm" }
 errorprone = "com.google.errorprone:error_prone_core:2.36.0"
-nullaway = "com.uber.nullaway:nullaway:0.12.3"
+nullaway = "com.uber.nullaway:nullaway:0.12.4"
 
 #Testing
 junit-bom = "org.junit:junit-bom:5.12.0"
