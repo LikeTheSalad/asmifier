@@ -52,15 +52,14 @@ public abstract class AsmifierTask extends DefaultTask {
         }
 
         if (fileChange.getChangeType().equals(ChangeType.REMOVED)) {
-          File targetFile =
-              getTargetFile(fileChange.getNormalizedPath(), fileChange.getFile().getName());
+          File targetFile = getTargetFile(fileChange.getNormalizedPath());
           if (!targetFile.delete()) {
             getLogger().warn("Could not delete: {}", targetFile);
           }
         } else if (fileChange.getChangeType().equals(ChangeType.ADDED)
             || fileChange.getChangeType().equals(ChangeType.MODIFIED)) {
           String relativeSourcePath = fileChange.getNormalizedPath();
-          File outputFile = getOutputFile(relativeSourcePath, fileChange.getFile().getName());
+          File outputFile = getOutputFile(relativeSourcePath);
           asmifyToFile(outputFile, classpath, relativeSourcePath);
         }
       }
@@ -71,7 +70,7 @@ public abstract class AsmifierTask extends DefaultTask {
               fileVisitDetails -> {
                 if (!fileVisitDetails.isDirectory()) {
                   String relativeSourcePath = fileVisitDetails.getRelativePath().getPathString();
-                  File outputFile = getOutputFile(relativeSourcePath, fileVisitDetails.getName());
+                  File outputFile = getOutputFile(relativeSourcePath);
                   asmifyToFile(outputFile, classpath, relativeSourcePath);
                 }
               });
@@ -91,8 +90,8 @@ public abstract class AsmifierTask extends DefaultTask {
     }
   }
 
-  private File getOutputFile(String sourceRelativePath, String sourceFileName) {
-    File outputFile = getTargetFile(sourceRelativePath, sourceFileName);
+  private File getOutputFile(String sourceRelativePath) {
+    File outputFile = getTargetFile(sourceRelativePath);
     try {
       outputFile.getParentFile().mkdirs();
       outputFile.createNewFile();
@@ -102,13 +101,9 @@ public abstract class AsmifierTask extends DefaultTask {
     return outputFile;
   }
 
-  private File getTargetFile(String sourceRelativePath, String sourceFileName) {
-    String classSimpleName = sourceFileName.replaceFirst("\\.class", "");
-    return getOutputDir()
-        .file(
-            "asm/" + sourceRelativePath.replaceFirst(sourceFileName, classSimpleName + "Dump.java"))
-        .get()
-        .getAsFile();
+  private File getTargetFile(String sourceRelativePath) {
+    String newPath = sourceRelativePath.replaceFirst("\\.class", "Dump.java");
+    return getOutputDir().file("asm/" + newPath).get().getAsFile();
   }
 
   private void asmify(FileCollection classpath, String relativePath, OutputStream outputStream) {
