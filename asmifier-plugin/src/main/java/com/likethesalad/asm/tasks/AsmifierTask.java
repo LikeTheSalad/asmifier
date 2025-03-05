@@ -77,7 +77,12 @@ public abstract class AsmifierTask extends DefaultTask {
     try (FileOutputStream outputStream = new FileOutputStream(outputFile)) {
       asmify(project, classpath, relativeSourcePath, outputStream);
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new RuntimeException(
+          "Exception during asmifier run where the source is: "
+              + relativeSourcePath
+              + " and the output is: "
+              + outputFile.getPath(),
+          e);
     }
   }
 
@@ -87,7 +92,7 @@ public abstract class AsmifierTask extends DefaultTask {
       outputFile.getParentFile().mkdirs();
       outputFile.createNewFile();
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new RuntimeException("Exception while getting output file: " + outputFile.getPath(), e);
     }
     return outputFile;
   }
