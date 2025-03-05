@@ -6,6 +6,7 @@ import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.file.Directory;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.plugins.JavaPluginExtension;
 import org.gradle.api.provider.Provider;
 import org.gradle.api.tasks.SourceSet;
@@ -35,7 +36,9 @@ public final class AsmifierPlugin implements Plugin<Project> {
                       .getLayout()
                       .getBuildDirectory()
                       .dir("generated/sources/" + ASMIFIER_OUTPUT_DIR_NAME));
-          asmifierTask.getTargetClasses().from(asmifierSourceSet.getOutput());
+          asmifierTask
+              .getTargetClasses()
+              .from(getTargetClassesCollection(project, asmifierSourceSet));
           asmifierTask.getClasspath().from(asmifierClasspath);
         });
 
@@ -44,6 +47,13 @@ public final class AsmifierPlugin implements Plugin<Project> {
         asmifierSourceSet,
         javaExtension,
         asmifierTaskTaskProvider.flatMap(AsmifierTask::getOutputDir));
+  }
+
+  private static @NotNull FileCollection getTargetClassesCollection(
+      Project project, SourceSet asmifierSourceSet) {
+    return project
+        .files(asmifierSourceSet.getOutput())
+        .filter(element -> !element.getName().endsWith(".class"));
   }
 
   private static void configureDumpSourceSet(

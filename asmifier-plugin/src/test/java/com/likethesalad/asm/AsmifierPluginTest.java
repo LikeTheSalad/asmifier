@@ -76,6 +76,36 @@ class AsmifierPluginTest {
   }
 
   @Test
+  void verifyFileOutputWithAnonymousClass() throws IOException {
+    createAsmifierSourceFile(
+        "com/test/MyClass.java",
+        """
+                    package com.test;
+
+                    import java.util.function.Supplier;
+
+                    public class MyClass {
+                        public void someMethod() {
+                            Supplier<String> supplier = new Supplier<String>() {
+                              @Override
+                              public String get() {
+                                return "Hello World!";
+                              }
+                            };
+                            System.out.println(supplier.get());
+                        }
+                    }
+                    """);
+    BuildResult result = asmifierRunner().build();
+
+    assertThat(getAsmifierOutcome(result)).isEqualTo(TaskOutcome.SUCCESS);
+    Map<String, File> generatedFiles = getGeneratedFiles();
+    assertThat(generatedFiles.keySet())
+        .containsExactlyInAnyOrder(
+            "asm/com/test/MyClassDump.java", "asm/com/test/MyClass$1Dump.java");
+  }
+
+  @Test
   void verifyIncrementalCompilation() throws IOException {
     Path myClassFile =
         createAsmifierSourceFile(
