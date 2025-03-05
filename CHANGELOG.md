@@ -1,6 +1,6 @@
 # Gradle ASMifier Changelog
 
-## Unreleased
+## Version 1.2.0 (2025-03-05)
 
 - Adding support for anonymous classes.
 - Removing usage of deprecated tools.
