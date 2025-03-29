@@ -4,5 +4,5 @@ plugins {
 }
 
 dependencies {
-    asmifier("org.ow2.asm:asm-util:9.7.1")
+    asmifier("org.ow2.asm:asm-util:9.8")
 }
