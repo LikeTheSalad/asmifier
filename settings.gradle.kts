@@ -12,7 +12,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath("com.likethesalad.tools:artifact-publisher:3.4.0")
+        classpath("com.likethesalad.tools:artifact-publisher:3.5.0")
     }
 }
 dependencyResolutionManagement {
