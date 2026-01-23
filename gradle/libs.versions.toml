@@ -18,4 +18,4 @@ junit = ["junit-jupiter", "junit-launcher", "junit-engine"]
 
 [plugins]
 errorprone = { id = "net.ltgt.errorprone", version = "4.3.0" }
-spotless = { id = "com.diffplug.spotless", version = "8.1.0" }
+spotless = { id = "com.diffplug.spotless", version = "8.2.0" }
