@@ -1,6 +1,6 @@
 # Gradle ASMifier Changelog
 
-## Unreleased
+## Version 1.3.0 (2026-01-24)
 
 - Adding support for any non-Java sources (tested with Kotlin).
 
