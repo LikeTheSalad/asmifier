@@ -1,15 +1,16 @@
 package com.likethesalad.asm;
 
 import com.likethesalad.asm.tasks.AsmifierTask;
+import java.util.List;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.file.Directory;
-import org.gradle.api.file.FileCollection;
 import org.gradle.api.plugins.JavaPluginExtension;
 import org.gradle.api.provider.Provider;
 import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.Sync;
 import org.gradle.api.tasks.TaskProvider;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,6 +26,16 @@ public final class AsmifierPlugin implements Plugin<Project> {
 
     Configuration asmifierClasspath = getAsmifierClasspath(project, asmifierSourceSet);
 
+    TaskProvider<Sync> asmifierTargetCollector =
+        project.getTasks().register("asmifierCollector", Sync.class);
+    asmifierTargetCollector.configure(
+        sync -> {
+          sync.from(
+              asmifierSourceSet.getOutput(),
+              copySpec -> copySpec.setIncludes(List.of("**/*.class")));
+          sync.into(project.getLayout().getBuildDirectory().dir("intermediates/" + sync.getName()));
+        });
+
     TaskProvider<AsmifierTask> asmifierTaskTaskProvider =
         project.getTasks().register(ASMIFIER_TASK_NAME, AsmifierTask.class);
     asmifierTaskTaskProvider.configure(
@@ -36,9 +47,7 @@ public final class AsmifierPlugin implements Plugin<Project> {
                       .getLayout()
                       .getBuildDirectory()
                       .dir("generated/sources/" + ASMIFIER_OUTPUT_DIR_NAME));
-          asmifierTask
-              .getTargetClasses()
-              .from(getTargetClassesCollection(project, asmifierSourceSet));
+          asmifierTask.getTargetClasses().from(asmifierTargetCollector);
           asmifierTask.getClasspath().from(asmifierClasspath);
         });
 
@@ -47,13 +56,6 @@ public final class AsmifierPlugin implements Plugin<Project> {
         asmifierSourceSet,
         javaExtension,
         asmifierTaskTaskProvider.flatMap(AsmifierTask::getOutputDir));
-  }
-
-  private static @NotNull FileCollection getTargetClassesCollection(
-      Project project, SourceSet asmifierSourceSet) {
-    return project
-        .files(asmifierSourceSet.getOutput())
-        .filter(element -> !element.getName().endsWith(".class"));
   }
 
   private static void configureDumpSourceSet(
