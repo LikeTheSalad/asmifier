@@ -80,7 +80,7 @@ public abstract class AsmifierTask extends DefaultTask {
   private void asmifyToFile(File outputFile, FileCollection classpath, String relativeSourcePath) {
     try (FileOutputStream outputStream = new FileOutputStream(outputFile)) {
       asmify(classpath, relativeSourcePath, outputStream);
-    } catch (IOException e) {
+    } catch (Exception e) {
       throw new RuntimeException(
           "Exception during asmifier run where the source is: "
               + relativeSourcePath

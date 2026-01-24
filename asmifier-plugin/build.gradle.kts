@@ -16,10 +16,10 @@ dependencies {
     testImplementation(libs.assertj)
 }
 
-val javaVersion = JavaVersion.VERSION_11
 java {
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }
 
 gradlePlugin {
@@ -31,17 +31,15 @@ gradlePlugin {
     }
 }
 
-tasks.withType(Test::class.java) {
+tasks.withType<Test> {
     useJUnitPlatform()
     systemProperty("asm_version", libs.versions.asm.get())
 }
-tasks.withType(JavaCompile::class.java) {
+tasks.withType<JavaCompile> {
     if (name.contains("test", true)) {
         options.errorprone.isEnabled.set(false)
-        val testJavaVersion = JavaVersion.VERSION_15.toString()
-        sourceCompatibility = testJavaVersion
-        targetCompatibility = testJavaVersion
     } else {
+        options.release = 11 // Ensuring deliverable jvm compatibility
         options.errorprone {
             check("NullAway", CheckSeverity.ERROR)
             option("NullAway:AnnotatedPackages", "com.likethesalad.asm")

@@ -30,15 +30,15 @@ class AsmifierPluginTest {
     createFile(
         "settings.gradle.kts",
         """
-                import org.gradle.api.initialization.resolve.RepositoriesMode
+                        import org.gradle.api.initialization.resolve.RepositoriesMode
 
-                dependencyResolutionManagement {
-                    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-                    repositories {
-                        mavenCentral()
-                    }
-                }
-                """);
+                        dependencyResolutionManagement {
+                            repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+                            repositories {
+                                mavenCentral()
+                            }
+                        }
+                        """);
   }
 
   @Test
@@ -46,25 +46,25 @@ class AsmifierPluginTest {
     createAsmifierSourceFile(
         "com/test/MyClass.java",
         """
-                package com.test;
+                        package com.test;
 
-                public class MyClass {
-                    public void someMethod() {
-                        System.out.println("Hello World!");
-                    }
-                }
-                """);
+                        public class MyClass {
+                            public void someMethod() {
+                                System.out.println("Hello World!");
+                            }
+                        }
+                        """);
     createAsmifierSourceFile(
         "com/test/MyOtherClass.java",
         """
-                package com.test;
+                        package com.test;
 
-                public class MyOtherClass {
-                    public void someOtherMethod() {
-                        System.out.println("Hello Other World!");
-                    }
-                }
-                """);
+                        public class MyOtherClass {
+                            public void someOtherMethod() {
+                                System.out.println("Hello Other World!");
+                            }
+                        }
+                        """);
 
     BuildResult result = asmifierRunner().build();
 
@@ -80,22 +80,22 @@ class AsmifierPluginTest {
     createAsmifierSourceFile(
         "com/test/MyClass.java",
         """
-                    package com.test;
+                        package com.test;
 
-                    import java.util.function.Supplier;
+                        import java.util.function.Supplier;
 
-                    public class MyClass {
-                        public void someMethod() {
-                            Supplier<String> supplier = new Supplier<String>() {
-                              @Override
-                              public String get() {
-                                return "Hello World!";
-                              }
-                            };
-                            System.out.println(supplier.get());
+                        public class MyClass {
+                            public void someMethod() {
+                                Supplier<String> supplier = new Supplier<String>() {
+                                  @Override
+                                  public String get() {
+                                    return "Hello World!";
+                                  }
+                                };
+                                System.out.println(supplier.get());
+                            }
                         }
-                    }
-                    """);
+                        """);
     BuildResult result = asmifierRunner().build();
 
     assertThat(getAsmifierOutcome(result)).isEqualTo(TaskOutcome.SUCCESS);
@@ -106,30 +106,51 @@ class AsmifierPluginTest {
   }
 
   @Test
+  void verifyFileFromNonJavaSourceOutput() throws IOException {
+    createAsmifierSourceFile(
+        "com/test/MyClass.kt",
+        """
+                        package com.test
+
+                        class MyClass {
+                            fun someMethod() {
+                                println("Hello World!")
+                            }
+                        }
+                        """);
+
+    BuildResult result = asmifierRunner().build();
+
+    assertThat(getAsmifierOutcome(result)).isEqualTo(TaskOutcome.SUCCESS);
+    Map<String, File> generatedFiles = getGeneratedFiles();
+    assertThat(generatedFiles.keySet()).containsExactlyInAnyOrder("asm/com/test/MyClassDump.java");
+  }
+
+  @Test
   void verifyIncrementalCompilation() throws IOException {
     Path myClassFile =
         createAsmifierSourceFile(
             "com/test/MyClass.java",
             """
-                    package com.test;
+                                package com.test;
 
-                    public class MyClass {
-                        public void someMethod() {
-                            System.out.println("Hello World!");
-                        }
-                    }
-                    """);
+                                public class MyClass {
+                                    public void someMethod() {
+                                        System.out.println("Hello World!");
+                                    }
+                                }
+                                """);
     createAsmifierSourceFile(
         "com/test/MySecondClass.java",
         """
-                    package com.test;
+                        package com.test;
 
-                    public class MySecondClass {
-                        public void someSecondMethod() {
-                            System.out.println("Hello World!");
+                        public class MySecondClass {
+                            public void someSecondMethod() {
+                                System.out.println("Hello World!");
+                            }
                         }
-                    }
-                    """);
+                        """);
     createAsmifierSourceFile(
         "com/test/MyThirdClass.java",
         """
@@ -167,26 +188,26 @@ class AsmifierPluginTest {
     createAsmifierSourceFile(
         "com/test/MyThirdClass.java",
         """
-                            package com.test;
+                        package com.test;
 
-                            public class MyThirdClass {
-                                public void someThirdMethod() {
-                                    System.out.println("Hello Changed World!");
-                                }
+                        public class MyThirdClass {
+                            public void someThirdMethod() {
+                                System.out.println("Hello Changed World!");
                             }
-                            """);
+                        }
+                        """);
     // Adding input
     createAsmifierSourceFile(
         "com/test/MyFourthClass.java",
         """
-                            package com.test;
+                        package com.test;
 
-                            public class MyFourthClass {
-                                public void someFourthMethod() {
-                                    System.out.println("Hello World!");
-                                }
+                        public class MyFourthClass {
+                            public void someFourthMethod() {
+                                System.out.println("Hello World!");
                             }
-                            """);
+                        }
+                        """);
 
     // Rerun
     BuildResult secondResult = asmifierRunner().build();
@@ -257,15 +278,16 @@ class AsmifierPluginTest {
     createFile(
         "build.gradle.kts",
         """
-                plugins {
-                    id("java")
-                    id("com.likethesalad.asmifier")
-                }
+                        plugins {
+                            id("java")
+                            id("org.jetbrains.kotlin.jvm") version "2.0.0"
+                            id("com.likethesalad.asmifier")
+                        }
 
-                dependencies {
-                    asmifier("org.ow2.asm:asm-util:%s")
-                }
-                """
+                        dependencies {
+                            asmifier("org.ow2.asm:asm-util:%s")
+                        }
+                        """
             .formatted(System.getProperty("asm_version")));
   }
 
