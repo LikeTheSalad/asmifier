@@ -1,5 +1,9 @@
 # Gradle ASMifier Changelog
 
+## Unreleased
+
+- Adding support for any non-Java sources (tested with Kotlin).
+
 ## Version 1.2.0 (2025-03-05)
 
 - Adding support for anonymous classes.
