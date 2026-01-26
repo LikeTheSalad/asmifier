@@ -49,7 +49,7 @@ dependencies {
 }
 ```
 
-You can find the latest ASMifier version [here](https://central.sonatype.com/artifact/org.ow2.asm/asm-util).
+You can find the latest ASM util lib version [here](https://central.sonatype.com/artifact/org.ow2.asm/asm-util).
 
 > [!NOTE]
 > The `asmifier` dependency type is added by this plugin to ensure that its dependencies are separated from those
