@@ -17,5 +17,5 @@ assertj = "org.assertj:assertj-core:3.27.7"
 junit = ["junit-jupiter", "junit-launcher", "junit-engine"]
 
 [plugins]
-errorprone = { id = "net.ltgt.errorprone", version = "4.4.0" }
+errorprone = { id = "net.ltgt.errorprone", version = "5.0.0" }
 spotless = { id = "com.diffplug.spotless", version = "8.2.1" }
