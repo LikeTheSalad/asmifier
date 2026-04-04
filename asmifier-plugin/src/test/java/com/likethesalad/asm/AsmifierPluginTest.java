@@ -244,6 +244,35 @@ class AsmifierPluginTest {
     assertThat(getAsmifierOutcome(result)).isEqualTo(TaskOutcome.NO_SOURCE);
   }
 
+  @Test
+  void verifyTaskLoadsFromCache() throws IOException {
+    File cacheDir = new File(projectDir, "build-cache");
+    configureLocalBuildCache(cacheDir);
+
+    createAsmifierSourceFile(
+        "com/test/MyClass.java",
+        """
+                        package com.test;
+
+                        public class MyClass {
+                            public void someMethod() {
+                                System.out.println("Hello World!");
+                            }
+                        }
+                        """);
+
+    // First run: populates the cache
+    asmifierRunnerWithCache().build();
+
+    // Wipe build outputs to force a cache look-up on the next run
+    deleteDirectory(new File(projectDir, "build"));
+
+    // Second run: task should be restored FROM-CACHE
+    BuildResult result = asmifierRunnerWithCache().build();
+
+    assertThat(getAsmifierOutcome(result)).isEqualTo(TaskOutcome.FROM_CACHE);
+  }
+
   private @NotNull Map<String, File> getGeneratedFiles() throws IOException {
     return getDirFiles("build/generated/sources/asmifierDump");
   }
@@ -272,6 +301,57 @@ class AsmifierPluginTest {
         .withProjectDir(projectDir)
         .withPluginClasspath()
         .withArguments("asmifier");
+  }
+
+  private GradleRunner asmifierRunnerWithCache() {
+    return GradleRunner.create()
+        .withProjectDir(projectDir)
+        .withPluginClasspath()
+        .withArguments("asmifier", "--build-cache");
+  }
+
+  private void configureLocalBuildCache(File cacheDir) throws IOException {
+    createFile(
+        "settings.gradle.kts",
+        """
+                        import org.gradle.api.initialization.resolve.RepositoriesMode
+
+                        buildCache {
+                            local {
+                                directory = File("%s")
+                            }
+                        }
+
+                        dependencyResolutionManagement {
+                            repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+                            repositories {
+                                mavenCentral()
+                            }
+                        }
+                        """
+            .formatted(cacheDir.getAbsolutePath().replace("\\", "/")));
+  }
+
+  private void deleteDirectory(File dir) throws IOException {
+    if (!dir.exists()) {
+      return;
+    }
+    Files.walkFileTree(
+        dir.toPath(),
+        new SimpleFileVisitor<>() {
+          @Override
+          public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
+              throws IOException {
+            Files.delete(file);
+            return FileVisitResult.CONTINUE;
+          }
+
+          @Override
+          public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+            Files.delete(dir);
+            return FileVisitResult.CONTINUE;
+          }
+        });
   }
 
   private void createBuildFile() throws IOException {
