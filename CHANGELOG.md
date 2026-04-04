@@ -1,6 +1,6 @@
 # Gradle ASMifier Changelog
 
-## Unreleased
+## Version 1.4.0 (2026-04-04)
 
 - Making task cacheable
 - Updating dependencies
