@@ -37,7 +37,7 @@ tasks.withType<Test> {
 }
 tasks.withType<JavaCompile> {
     if (name.contains("test", true)) {
-        options.errorprone.isEnabled.set(false)
+        options.errorprone.enabled.set(false)
     } else {
         options.release = 11 // Ensuring deliverable jvm compatibility
         options.errorprone {
