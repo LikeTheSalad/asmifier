@@ -1,5 +1,10 @@
 # Gradle ASMifier Changelog
 
+## Unreleased
+
+- Making task cacheable
+- Updating dependencies
+
 ## Version 1.3.0 (2026-01-24)
 
 - Adding support for any non-Java sources (tested with Kotlin).
