@@ -1,5 +1,7 @@
 # Gradle ASMifier Changelog
 
+<!-- CHANGELOG_INSERT -->
+
 ## Version 1.4.0 (2026-04-04)
 
 - Making task cacheable
