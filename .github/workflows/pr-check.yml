@@ -8,4 +8,6 @@ jobs:
     with:
       app-id: '${{ vars.APP_ID }}'
       run-on-windows: true
-    secrets: inherit
+    secrets:
+      GH_BOT_PRIVATE_KEY: '${{ secrets.GH_BOT_PRIVATE_KEY }}'
+
