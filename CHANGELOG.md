@@ -2,6 +2,16 @@
 
 <!-- CHANGELOG_INSERT -->
 
+## Version 1.4.1 (2026-05-01)
+
+* Update Gradle to v9.5.0 ([#135](https://github.com/LikeTheSalad/asmifier/pull/135))
+* Update dependency com.uber.nullaway:nullaway to v0.13.4 ([#134](https://github.com/LikeTheSalad/asmifier/pull/134))
+* Update dependency com.uber.nullaway:nullaway to v0.13.3 ([#133](https://github.com/LikeTheSalad/asmifier/pull/133))
+* Update dependency com.uber.nullaway:nullaway to v0.13.2 ([#132](https://github.com/LikeTheSalad/asmifier/pull/132))
+* Update dependency com.google.errorprone:error_prone_core to v2.49.0 ([#131](https://github.com/LikeTheSalad/asmifier/pull/131))
+* Update dependency org.junit:junit-bom to v6 ([#129](https://github.com/LikeTheSalad/asmifier/pull/129))
+* Migrate to GitHub tools ([#128](https://github.com/LikeTheSalad/asmifier/pull/128))
+
 ## Version 1.4.0 (2026-04-04)
 
 - Making task cacheable
