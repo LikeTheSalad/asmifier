@@ -10,5 +10,5 @@ java {
 }
 
 dependencies {
-    asmifier("org.ow2.asm:asm-util:9.10")
+    asmifier("org.ow2.asm:asm-util:9.10.1")
 }
