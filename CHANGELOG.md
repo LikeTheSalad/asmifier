@@ -2,6 +2,18 @@
 
 <!-- CHANGELOG_INSERT -->
 
+## Version 1.4.2 (2026-06-01)
+
+* Update plugin spotless to v8.6.0 ([#146](https://github.com/LikeTheSalad/asmifier/pull/146))
+* Update dependency org.ow2.asm:asm-util to v9.10.1 ([#145](https://github.com/LikeTheSalad/asmifier/pull/145))
+* Update dependency org.ow2.asm:asm-util to v9.10.1 ([#144](https://github.com/LikeTheSalad/asmifier/pull/144))
+* Update dependency org.junit:junit-bom to v6.1.0 ([#143](https://github.com/LikeTheSalad/asmifier/pull/143))
+* Update plugin spotless to v8.5.1 ([#142](https://github.com/LikeTheSalad/asmifier/pull/142))
+* Update plugin spotless to v8.5.0 ([#141](https://github.com/LikeTheSalad/asmifier/pull/141))
+* Update dependency org.ow2.asm:asm-util to v9.10 ([#140](https://github.com/LikeTheSalad/asmifier/pull/140))
+* Update dependency org.ow2.asm:asm-util to v9.10 ([#139](https://github.com/LikeTheSalad/asmifier/pull/139))
+* Update Gradle to v9.5.1 ([#138](https://github.com/LikeTheSalad/asmifier/pull/138))
+
 ## Version 1.4.1 (2026-05-01)
 
 * Update Gradle to v9.5.0 ([#135](https://github.com/LikeTheSalad/asmifier/pull/135))
