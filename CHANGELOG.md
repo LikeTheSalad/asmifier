@@ -2,6 +2,12 @@
 
 <!-- CHANGELOG_INSERT -->
 
+## Version 1.4.4 (2026-08-01)
+
+* Update plugin spotless to v8.9.0 ([#162](https://github.com/LikeTheSalad/asmifier/pull/162))
+* Update dependency com.uber.nullaway:nullaway to v0.13.8 ([#161](https://github.com/LikeTheSalad/asmifier/pull/161))
+* Update dependency org.junit:junit-bom to v6.1.2 ([#160](https://github.com/LikeTheSalad/asmifier/pull/160))
+
 ## Version 1.4.3 (2026-07-01)
 
 * Update plugin spotless to v8.8.0 ([#157](https://github.com/LikeTheSalad/asmifier/pull/157))
