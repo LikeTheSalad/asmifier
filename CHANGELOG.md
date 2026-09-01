@@ -2,6 +2,17 @@
 
 <!-- CHANGELOG_INSERT -->
 
+## Version 1.4.5 (2026-09-01)
+
+* Update dependency com.uber.nullaway:nullaway to v0.14.1 ([#172](https://github.com/LikeTheSalad/asmifier/pull/172))
+* Update plugin spotless to v8.10.1 ([#171](https://github.com/LikeTheSalad/asmifier/pull/171))
+* Update plugin errorprone to v5.1.1 ([#170](https://github.com/LikeTheSalad/asmifier/pull/170))
+* Update dependency com.uber.nullaway:nullaway to v0.14.0 ([#169](https://github.com/LikeTheSalad/asmifier/pull/169))
+* Update Gradle to v9.7.1 ([#168](https://github.com/LikeTheSalad/asmifier/pull/168))
+* Update plugin spotless to v8.10.0 ([#167](https://github.com/LikeTheSalad/asmifier/pull/167))
+* Update dependency org.junit:junit-bom to v6.1.3 ([#166](https://github.com/LikeTheSalad/asmifier/pull/166))
+* Update Gradle to v9.7.0 ([#165](https://github.com/LikeTheSalad/asmifier/pull/165))
+
 ## Version 1.4.4 (2026-08-01)
 
 * Update plugin spotless to v8.9.0 ([#162](https://github.com/LikeTheSalad/asmifier/pull/162))
