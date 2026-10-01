@@ -2,6 +2,13 @@
 
 <!-- CHANGELOG_INSERT -->
 
+## Version 1.4.6 (2026-10-01)
+
+* Update plugin spotless to v8.10.3 ([#178](https://github.com/LikeTheSalad/asmifier/pull/178))
+* Update dependency com.uber.nullaway:nullaway to v0.14.2 ([#177](https://github.com/LikeTheSalad/asmifier/pull/177))
+* Update Gradle to v9.8.0 ([#176](https://github.com/LikeTheSalad/asmifier/pull/176))
+* Update plugin spotless to v8.10.2 ([#175](https://github.com/LikeTheSalad/asmifier/pull/175))
+
 ## Version 1.4.5 (2026-09-01)
 
 * Update dependency com.uber.nullaway:nullaway to v0.14.1 ([#172](https://github.com/LikeTheSalad/asmifier/pull/172))
