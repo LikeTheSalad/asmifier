@@ -2,6 +2,19 @@
 
 <!-- CHANGELOG_INSERT -->
 
+## Version 1.4.7 (2026-11-01)
+
+* Update plugin errorprone to v5.2.0 ([#190](https://github.com/LikeTheSalad/asmifier/pull/190))
+* Update dependency com.uber.nullaway:nullaway to v0.14.3 ([#189](https://github.com/LikeTheSalad/asmifier/pull/189))
+* Update dependency com.google.errorprone:error_prone_core to v2.51.0 ([#188](https://github.com/LikeTheSalad/asmifier/pull/188))
+* Update Gradle to v9.8.2 ([#187](https://github.com/LikeTheSalad/asmifier/pull/187))
+* Update dependency org.ow2.asm:asm-util to v9.11.1 ([#186](https://github.com/LikeTheSalad/asmifier/pull/186))
+* Update dependency org.ow2.asm:asm-util to v9.11.1 ([#185](https://github.com/LikeTheSalad/asmifier/pull/185))
+* Update dependency org.ow2.asm:asm-util to v9.11 ([#184](https://github.com/LikeTheSalad/asmifier/pull/184))
+* Update dependency org.ow2.asm:asm-util to v9.11 ([#183](https://github.com/LikeTheSalad/asmifier/pull/183))
+* Update plugin spotless to v8.10.4 ([#182](https://github.com/LikeTheSalad/asmifier/pull/182))
+* Update Gradle to v9.8.1 ([#181](https://github.com/LikeTheSalad/asmifier/pull/181))
+
 ## Version 1.4.6 (2026-10-01)
 
 * Update plugin spotless to v8.10.3 ([#178](https://github.com/LikeTheSalad/asmifier/pull/178))
