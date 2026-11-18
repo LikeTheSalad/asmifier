@@ -69,14 +69,13 @@ public abstract class AsmifierTask extends DefaultTask {
     } else {
       getTargetClasses()
           .getAsFileTree()
-          .visit(
-              fileVisitDetails -> {
-                if (!fileVisitDetails.isDirectory()) {
-                  String relativeSourcePath = fileVisitDetails.getRelativePath().getPathString();
-                  File outputFile = getOutputFile(relativeSourcePath);
-                  asmifyToFile(outputFile, classpath, relativeSourcePath);
-                }
-              });
+          .visit(fileVisitDetails -> {
+            if (!fileVisitDetails.isDirectory()) {
+              String relativeSourcePath = fileVisitDetails.getRelativePath().getPathString();
+              File outputFile = getOutputFile(relativeSourcePath);
+              asmifyToFile(outputFile, classpath, relativeSourcePath);
+            }
+          });
     }
   }
 
@@ -112,13 +111,12 @@ public abstract class AsmifierTask extends DefaultTask {
   private void asmify(FileCollection classpath, String relativePath, OutputStream outputStream) {
     String className = relativePath.replaceFirst("\\.class", "").replaceAll("/", ".");
     getExecOperations()
-        .javaexec(
-            javaExecSpec -> {
-              javaExecSpec.setClasspath(classpath);
-              javaExecSpec.getMainClass().set("org.objectweb.asm.util.ASMifier");
-              javaExecSpec.args("-nodebug");
-              javaExecSpec.args(className);
-              javaExecSpec.setStandardOutput(outputStream);
-            });
+        .javaexec(javaExecSpec -> {
+          javaExecSpec.setClasspath(classpath);
+          javaExecSpec.getMainClass().set("org.objectweb.asm.util.ASMifier");
+          javaExecSpec.args("-nodebug");
+          javaExecSpec.args(className);
+          javaExecSpec.setStandardOutput(outputStream);
+        });
   }
 }

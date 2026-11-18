@@ -28,28 +28,25 @@ public final class AsmifierPlugin implements Plugin<Project> {
 
     TaskProvider<Sync> asmifierTargetCollector =
         project.getTasks().register("asmifierCollector", Sync.class);
-    asmifierTargetCollector.configure(
-        sync -> {
-          sync.from(
-              asmifierSourceSet.getOutput(),
-              copySpec -> copySpec.setIncludes(List.of("**/*.class")));
-          sync.into(project.getLayout().getBuildDirectory().dir("intermediates/" + sync.getName()));
-        });
+    asmifierTargetCollector.configure(sync -> {
+      sync.from(
+          asmifierSourceSet.getOutput(), copySpec -> copySpec.setIncludes(List.of("**/*.class")));
+      sync.into(project.getLayout().getBuildDirectory().dir("intermediates/" + sync.getName()));
+    });
 
     TaskProvider<AsmifierTask> asmifierTaskTaskProvider =
         project.getTasks().register(ASMIFIER_TASK_NAME, AsmifierTask.class);
-    asmifierTaskTaskProvider.configure(
-        asmifierTask -> {
-          asmifierTask
-              .getOutputDir()
-              .set(
-                  project
-                      .getLayout()
-                      .getBuildDirectory()
-                      .dir("generated/sources/" + ASMIFIER_OUTPUT_DIR_NAME));
-          asmifierTask.getTargetClasses().from(asmifierTargetCollector);
-          asmifierTask.getClasspath().from(asmifierClasspath);
-        });
+    asmifierTaskTaskProvider.configure(asmifierTask -> {
+      asmifierTask
+          .getOutputDir()
+          .set(
+              project
+                  .getLayout()
+                  .getBuildDirectory()
+                  .dir("generated/sources/" + ASMIFIER_OUTPUT_DIR_NAME));
+      asmifierTask.getTargetClasses().from(asmifierTargetCollector);
+      asmifierTask.getClasspath().from(asmifierClasspath);
+    });
 
     configureDumpSourceSet(
         project,
